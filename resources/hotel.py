@@ -30,6 +30,25 @@ class Hotel(Resource):
         for hotel in hoteis:
              if hotel["hotel_id"] == id_hotel:
                  return{ "message": "Hotel witch this id already exists"}
+             
         novo_hotel = {"hotel_id" : id_hotel, **dados }
         hoteis.append(novo_hotel)
         return novo_hotel, 200
+
+    def put(self, id_hotel):
+        dados = Hotel.argumentos.parse_args() #Dicionário                    
+        for hotel in hoteis:
+             if hotel["hotel_id"] == id_hotel:
+                 hotel_atualizado = {"hotel_id": id_hotel, **dados}
+                 hotel.update(hotel_atualizado)
+                 return hotel, 200
+             
+        novo_hotel = {"hotel_id" : id_hotel, **dados }
+        hoteis.append(novo_hotel)
+        return novo_hotel, 201
+
+    def delete(self, id_hotel):
+        global hoteis
+        hoteis = [hotel for hotel in hoteis if hotel["hotel_id"] != id_hotel]
+        return {"mesage": f"hotel witch {id_hotel} deleted"}
+    
