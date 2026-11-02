@@ -12,6 +12,17 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///hoteis.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET-KEY"]= " a_minha_palavra_secreta_para_aminha_api_vai_ser_forte"
+app.config["JWT_BLACKLIST_ENABLED"] = True
+
+@jwt.token_in_blocklist_loader
+def verificar_blocklist(jwt_heard,jwt_playload):
+    jti = jwt_playload["jti"]
+    return jti in BLOCKLIST
+
+@jwt.revoked_token_loader
+def token_revogad(jwt_header,jwt_playload):
+    return {"message":"You have no access to this resource. login please"}
+
 
 api = Api(app)
 jwt = JWTManager (app)
