@@ -12,6 +12,21 @@ class Hoteis(Resource):
 
 
 # Listar, inserir, atualizar e eliminar um hotel específico
+class Hoteis(Resource):
+    path_params = reqparse.RequestParser()
+    path_params.add_argument("cidade", type=str, default="", loacation="args")
+    path_params.add_argument("Estrelas_min", type=float, default=0, loacation="args")
+    path_params.add_argument("Estrelas_max", type=float, default=5, loacation="args")
+    path_params.add_argument("diaria_min", type=float, default=0, loacation="args")
+    path_params.add_argument("diaria_max", type=float, default=0, loacation="args")
+    path_params.add_argument("itens", type=int, default=3, loacation="args")
+    path_params.add_argument("page", type=int, default=1, loacation="args")
+
+def get(self):
+    meus_filtros = Hoteis.path_params.parse_args()
+
+
+
 class Hotel(Resource):
     argumentos = reqparse.RequestParser()
     argumentos.add_argument("nome", type=str, help="Nome obrigatótio")
